@@ -8,26 +8,27 @@ module.exports = {
     var encodedLocation = encodeURIComponent(location);
     var requestUrl = `${OPEN_WEATHER_MAP_URL}&q=${encodedLocation}`;
     debugger;
-    return axios.get(requestUrl).then(function(res) {
-      if (res.status === 200)
-      {
-        return res.data.main.temp;
-      }
-      else {
-        throw new Error (res.statusText)
-      }
-      //debugger;
-      // if (res.data.cod && res.data.message)
-      // {
-      //   throw new Error(res.data.message);
-      // }
-      // else {
-      //   debugger;
-      //   return res.data.main.temp;
-      // }
-    }, function (res) {
-      throw new Error (res.statusText);
-    });
-    debugger;
-  }
+    return axios.get(requestUrl).then (function(res) {
+          if (res.status === 200)
+          {
+            return res.data.main.temp;
+          }
+          else if (res.data.cod){
+            throw new Error (res.statusText)
+        }}).catch (function (res) {
+          throw new Error (res.statusText);
+      });
+    }
 }
+
+
+
+//debugger;
+// if (res.data.cod && res.data.message)
+// {
+//   throw new Error(res.data.message);
+// }
+// else {
+//   debugger;
+//   return res.data.main.temp;
+// }
