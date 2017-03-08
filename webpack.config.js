@@ -1,15 +1,26 @@
+var webpack = require('webpack');
+
 module.exports = {
-  entry: './app/app.jsx',
+  entry: [
+    'script-loader!jquery/dist/jquery.min.js',
+    'script-loader!foundation-sites/dist/js/foundation.min.js',
+    './app/app.jsx'
+],
+externals: {
+  jquery: 'jQuery'
+},
+plugins: [
+  new webpack.ProvidePlugin({
+    '$': 'jquery',
+    'jQuery': 'jquery'
+  })
+],
   output: {
     path:  __dirname,
     filename: './public/bundle.js'
   },
   resolve: {
-    root: __dirname,
-    alias: {
-      Main: '/app/components/Main.jsx'
-    },
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   },
   module:{
     loaders: [
@@ -22,5 +33,6 @@ module.exports = {
         exclude: /(node_modules | bower_components)/
       }
     ]
-  }
+  },
+  devtool: 'cheap-module-eval-source-map'
 };
